@@ -1,4 +1,38 @@
 {
+  "plugins": ["import"],
+  "rules": {
+    "import/order": [
+      "error",
+      {
+        "groups": [
+          "builtin", // Node builtins like 'path', 'fs'
+          "external", // npm modules
+          "internal", // Aliased paths like @/components
+          ["parent", "sibling", "index"], // Relative imports
+          "object", // import * as name
+          "type" // import type { X }
+        ],
+        "pathGroups": [
+          {
+            "pattern": "@/components/**",
+            "group": "internal",
+            "position": "after"
+          },
+          {
+            "pattern": "@/hooks/**",
+            "group": "internal",
+            "position": "after"
+          }
+        ],
+        "pathGroupsExcludedImportTypes": ["builtin"],
+        "newlines-between": "always", // Forces blank lines between groups
+        "alphabetize": {
+          "order": "asc",
+          "caseInsensitive": true
+        }
+      }
+    ]
+  },
   "extends": [
     "next/core-web-vitals",
     "plugin:tailwindcss/recommended",

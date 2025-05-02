@@ -1,6 +1,10 @@
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import { ThemeModeScript } from "flowbite-react";
+import { Inter } from "next/font/google";
+
+import { QueryClientProviderWrapper, AuthProviderWrapper } from "@/providers";
+
+import type { Metadata } from "next";
+
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -20,7 +24,11 @@ export default function RootLayout({
       <head>
         <ThemeModeScript />
       </head>
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <QueryClientProviderWrapper>
+          <AuthProviderWrapper>{children}</AuthProviderWrapper>
+        </QueryClientProviderWrapper>
+      </body>
     </html>
   );
 }
