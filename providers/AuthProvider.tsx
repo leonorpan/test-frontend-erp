@@ -9,7 +9,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [refreshToken, setRefreshToken] = useState("");
   const [user, setUser] = useState<UserData | null>(null);
 
-  const login = (userData: AuthUser) => {
+  const loginSecondFactor = (userData: AuthUser) => {
     setAccessToken(userData.accessToken);
     setRefreshToken(userData.refreshToken);
     setUser(userData.user);
@@ -31,7 +31,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         user,
         guestUser,
         setGuestUser,
-        login,
+        loginSecondFactor,
         logout,
         isLoggedIn,
       }}

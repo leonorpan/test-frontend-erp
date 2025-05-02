@@ -52,7 +52,11 @@ export interface AuthContextType {
   accessToken: string;
   user: UserData | null;
   guestUser: GuestUser | null;
-  login: (userData: any) => void;
+  loginSecondFactor: (userData: {
+    accessToken: string;
+    refreshToken: string;
+    user: UserData;
+  }) => void;
   logout: () => void;
   setGuestUser: (guestUser: GuestUser | null) => void;
   isLoggedIn: () => boolean;

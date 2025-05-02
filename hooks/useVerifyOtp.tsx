@@ -32,7 +32,7 @@ export const useVerifyOtp = () => {
       return data;
     },
     onSuccess: (data) => {
-      auth?.login(data);
+      auth?.loginSecondFactor(data);
     },
     onError: (error: any) => {
       console.error("OTP Verification Error:", error.message);
