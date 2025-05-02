@@ -4,13 +4,17 @@ import { useState } from "react";
 
 import { LoginFormData } from "@/types";
 
+interface LoginFormProps {
+  onSubmit: (formData: LoginFormData) => void;
+  errorMessage: string | null;
+  isSubmitting: boolean;
+}
+
 export function LoginForm({
   onSubmit,
   errorMessage,
-}: {
-  onSubmit: (formData: LoginFormData) => void;
-  errorMessage: string | null;
-}) {
+  isSubmitting,
+}: LoginFormProps) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
@@ -99,6 +103,8 @@ export function LoginForm({
               </div>
               <Button
                 type="submit"
+                isProcessing={isSubmitting}
+                disabled={isSubmitting}
                 className="w-full bg-ghred-500 hover:bg-ghred-600"
               >
                 Sign in

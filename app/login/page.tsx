@@ -15,18 +15,19 @@ export default function LoginPage() {
   const router = useRouter();
   const auth = useAuth();
   const [errorMessage, setErrorMessage] = useState<string>("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const { mutateAsync: loginMutateAsync } = useLogin();
 
   async function handleLoginFormSubmit(formData: LoginFormData) {
     // Set guest user email in auth context
     // this is used on the EmailVerification page to submit the verify-otp request
+    setIsSubmitting(true);
     auth.setGuestUser({ email: formData.email });
     try {
       const response = await loginMutateAsync({
         ...formData,
         user_type: DEFAULT_USER_TYPE,
       });
-      auth?.login(response);
       router.push("/otp");
     } catch (error: Error | unknown) {
       if (error instanceof Error) {
@@ -36,12 +37,18 @@ export default function LoginPage() {
       } else {
         setErrorMessage("An unknown error occurred. Please try again.");
       }
+    } finally {
+      setIsSubmitting(false);
     }
   }
 
   return (
     <div className="flex h-screen items-center justify-center bg-gray-50 dark:bg-gray-900">
-      <LoginForm onSubmit={handleLoginFormSubmit} errorMessage={errorMessage} />
+      <LoginForm
+        onSubmit={handleLoginFormSubmit}
+        errorMessage={errorMessage}
+        isSubmitting={isSubmitting}
+      />
     </div>
   );
 }

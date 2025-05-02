@@ -10,10 +10,12 @@ import { useVerifyOtp } from "@/hooks/useVerifyOtp";
 
 export default function EmailVerificationPage() {
   const { mutate: verifyOtp, error } = useVerifyOtp();
-  const [errorMessage, setErrorMessage] = useState<string>("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const router = useRouter();
 
   const handleOtpFormSubmit = async (otp: string) => {
+    setIsSubmitting(true);
     setErrorMessage(""); // Clear previous error message
     try {
       await verifyOtp(otp);
@@ -28,6 +30,8 @@ export default function EmailVerificationPage() {
           "An unknown error occurred during OTP verification. Please try again.",
         );
       }
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -35,6 +39,7 @@ export default function EmailVerificationPage() {
     <EmailVerificationOTPForm
       onComplete={handleOtpFormSubmit}
       errorMessage={errorMessage}
+      isSubmitting={isSubmitting}
     />
   );
 }

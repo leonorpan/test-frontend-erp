@@ -2,13 +2,17 @@
 import { Button } from "flowbite-react";
 import { useRef, useState } from "react";
 
+interface EmailVerificationOTPFormProps {
+  onComplete: (code: string) => void;
+  isSubmitting: boolean;
+  errorMessage: string;
+}
+
 export function EmailVerificationOTPForm({
   onComplete,
+  isSubmitting,
   errorMessage,
-}: {
-  onComplete: (code: string) => void;
-  errorMessage: string;
-}) {
+}: EmailVerificationOTPFormProps) {
   const [codes, setCodes] = useState(Array(6).fill(""));
   const inputRefs = useRef<HTMLInputElement[] | null[]>([]);
 
@@ -154,6 +158,8 @@ export function EmailVerificationOTPForm({
                 <Button
                   type="submit"
                   size="xl"
+                  disabled={isSubmitting}
+                  isProcessing={isSubmitting}
                   onClick={handleSubmit}
                   className="w-full bg-ghred-500 hover:bg-ghred-600 [&>span]:text-sm"
                 >
