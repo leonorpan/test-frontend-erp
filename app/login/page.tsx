@@ -24,7 +24,7 @@ export default function LoginPage() {
     setIsSubmitting(true);
     auth.setGuestUser({ email: formData.email });
     try {
-      const response = await loginMutateAsync({
+      await loginMutateAsync({
         ...formData,
         user_type: DEFAULT_USER_TYPE,
       });

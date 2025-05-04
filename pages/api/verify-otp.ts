@@ -1,3 +1,5 @@
+import { setCookie } from "nookies";
+
 import { DEFAULT_USER_TYPE } from "@/consts";
 
 import type { NextApiRequest, NextApiResponse } from "next";
@@ -32,7 +34,6 @@ export default async function verifyOtpHandler(
       }),
     });
 
-    console.log("backendRes", backendRes);
     const contentType = backendRes.headers.get("content-type") || "";
     let responseBody: any = null;
 
@@ -42,7 +43,25 @@ export default async function verifyOtpHandler(
       responseBody = await backendRes.text();
     }
 
-    res.status(backendRes.status).send(responseBody);
+    if (responseBody.access_token && responseBody.refresh_token) {
+      setCookie({ res }, "accessToken", responseBody.access_token, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "lax",
+        path: "/",
+        maxAge: 30 * 24 * 60 * 60,
+      });
+
+      setCookie({ res }, "refreshToken", responseBody.refresh_token, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "lax",
+        path: "/",
+        maxAge: 30 * 24 * 60 * 60,
+      });
+    }
+
+    return res.status(backendRes.status).send(responseBody.user);
   } catch (error: any) {
     console.error("Proxy verify-otp error:", error);
     res.status(500).json({ message: "Internal server error" });

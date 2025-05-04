@@ -5,6 +5,7 @@ import {
   LifebuoyIcon,
 } from "@heroicons/react/24/outline";
 import {
+  HR,
   Sidebar,
   SidebarItem,
   SidebarItemGroup,
@@ -20,6 +21,7 @@ const AppSidebar = ({}: Readonly<{}>) => {
           <SidebarItem href="#" icon={HomeIcon}>
             Dashboard
           </SidebarItem>
+          <HR />
           <SidebarItem href="#" icon={BookOpenIcon}>
             FAQs
           </SidebarItem>

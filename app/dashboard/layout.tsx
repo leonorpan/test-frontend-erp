@@ -14,7 +14,7 @@ const DashboardLayout = ({
       <AppNav />
       <div className="flex min-h-screen">
         <AppSidebar />
-        <div>{children}</div>
+        <div className="container bg-gray-100">{children}</div>
       </div>
     </>
   );

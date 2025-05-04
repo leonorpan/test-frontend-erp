@@ -43,21 +43,17 @@ export interface UserData {
 }
 
 export interface AuthUser {
-  accessToken: string;
-  refreshToken: string;
   user: UserData;
 }
 
 export interface AuthContextType {
-  accessToken: string;
   user: UserData | null;
   guestUser: GuestUser | null;
-  loginSecondFactor: (userData: {
-    accessToken: string;
-    refreshToken: string;
-    user: UserData;
-  }) => void;
+  loginSecondFactor: (userData: { user: UserData }) => void;
   logout: () => void;
   setGuestUser: (guestUser: GuestUser | null) => void;
   isLoggedIn: () => boolean;
 }
+
+export * from "./dashboard";
+export * from "./api";
