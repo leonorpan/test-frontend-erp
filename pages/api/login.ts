@@ -15,7 +15,7 @@ export default async function loginHandler(
   const apiKey = process.env.BACKEND_API_V1_KEY;
 
   try {
-    const backendRes = await fetch(`https://${apiUrl}/api/v1/user/login`, {
+    const backendRes = await fetch(`${apiUrl}api/v1/user/login`, {
       method: "POST",
       headers: {
         api_key: apiKey!,

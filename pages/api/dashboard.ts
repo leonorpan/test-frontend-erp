@@ -21,16 +21,13 @@ export default async function dashboardAccountantHandler(
   }
 
   try {
-    const backendRes = await fetch(
-      `https://${apiUrl}/api/v1/dashboard/accountant`,
-      {
-        headers: {
-          api_key: apiKey!,
-          "Content-Type": "application/json",
-          token: accessToken,
-        },
+    const backendRes = await fetch(`${apiUrl}api/v1/dashboard/accountant`, {
+      headers: {
+        api_key: apiKey!,
+        "Content-Type": "application/json",
+        token: accessToken,
       },
-    );
+    });
 
     const responseBody = await backendRes.json().catch(() => ({})); // backend might not send body
     if (!backendRes.ok) {

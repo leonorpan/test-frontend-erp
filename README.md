@@ -1,4 +1,40 @@
-# Garage Hero Frontend Test
+# GH Frontend Test
+
+## App Overview
+
+_Tech:_
+
+- Next.js flowbite-react, Tailwind CSS
+- For charts - eCharts-react
+- Since robust error handling was a requirement for this app, I opted for tanstack-query (managing the lifecycle of data fetching, easy retries, advanced configuration, handling loading states, success, and errors)
+- For client state - React-Context
+
+## Setupes.
+
+```bash
+npm run setup
+```
+
+In your .env.local file, paste the url and the token of the backend.
+
+```bash
+npm run install-and-dev
+```
+
+## Part 1 - Authentication
+
+### Authentication Architecture
+
+My primary focus was when developing the auth flow was making sure that I don't expose any sensitive data, either on Github (api key) or simply during runtime on the client (api key, user Tokens).
+I followed the industry-standard solution and opted to use proxy servers for all API interactions. These can be found under the pages/api/\*\*.ts directory, ensuring that the tokens and API key are securely hidden from the client-side.
+
+To persist the user's session, two cookies are used: accessToken and refreshToken. These cookies enable the user to stay logged in while navigating the app. If a user attempts to visit the dashboard and no valid token exists or the token has expired, the cookies are cleared, and the user is redirected back to the login page.
+
+This approach helps maintain both security and a seamless user experience by abstracting sensitive data away from the client while also providing an effective way to manage the user session across requests.
+
+For managing client-side state, I chose React Context, which proved to be a handy tool, especially when navigating between the auth forms.
+
+---
 
 ## Objective
 
@@ -148,3 +184,7 @@ You have **3 days** to complete the test.
 Sign-up is not required in this test. Use the **Sign-Up API** as described above to create test accounts.
 
 Good luck, and we look forward to reviewing your submission!
+
+```
+
+```

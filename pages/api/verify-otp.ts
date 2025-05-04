@@ -21,7 +21,7 @@ export default async function verifyOtpHandler(
   }
 
   try {
-    const backendRes = await fetch(`https://${apiUrl}/api/v1/user/verify-otp`, {
+    const backendRes = await fetch(`${apiUrl}api/v1/user/verify-otp`, {
       method: "POST",
       headers: {
         api_key: apiKey!,
