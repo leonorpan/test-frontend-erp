@@ -2,12 +2,24 @@ import { DashboardAccountantResponse } from "./api";
 
 export type DashboardStat = {
   title: string;
-  value: number;
+  value: string;
   change: string;
-  changeUnit: "percentage" | "number" | "time";
   statType: "number" | "time";
   legend: string;
   positiveIsGood: boolean;
+};
+
+export type DashboardFinancial = {
+  title: string;
+  value: number;
+  change: string;
+  isPositiveChange: boolean;
+};
+
+export type DashboardBreakdown = {
+  label: string;
+  value: string;
+  percentage: number;
 };
 
 export type FinancialConfig = {

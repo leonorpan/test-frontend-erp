@@ -1,7 +1,11 @@
+type ProfitDistributionKey = "profit" | "expenses" | "assets";
+
+type ProfitDistribution = Record<ProfitDistributionKey, number>;
+
 export interface DashboardAccountantResponse {
   stats: {
     outstanding_invoices: number;
-    average_collection_period: number;
+    average_collection_period: number | string;
     gross_profit_margin: number;
     inventory_turnover: string;
     online_payments: number;
@@ -10,7 +14,7 @@ export interface DashboardAccountantResponse {
     revenue: number;
     expenses: number;
     stock_value: number;
-    profit_distribution: Record<string, unknown>;
+    profit_distribution: ProfitDistribution;
   };
   change: {
     outstanding_invoices: number;

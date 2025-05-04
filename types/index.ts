@@ -1,3 +1,6 @@
+export * from "./dashboard";
+export * from "./api";
+
 type LoginCredentials = {
   email: string;
   password: string;
@@ -54,6 +57,4 @@ export interface AuthContextType {
   setGuestUser: (guestUser: GuestUser | null) => void;
   isLoggedIn: () => boolean;
 }
-
-export * from "./dashboard";
-export * from "./api";
+export type Maybe<T> = T | null;
