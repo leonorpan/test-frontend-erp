@@ -71,10 +71,10 @@ const DashboardPage = () => {
         financials={dashboardFinancials}
         breakdown={breakDownData}
       />
-      <FinancialOverviewSection />
+      {/* <FinancialOverviewSection />
       <InvoicesTable />
       <ReceiptsTable />
-      <InventoryTable />
+      <InventoryTable /> */}
     </div>
   );
 };
