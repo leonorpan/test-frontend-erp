@@ -4,12 +4,17 @@
 
 _Tech:_
 
-- Next.js flowbite-react, Tailwind CSS
-- For charts - eCharts-react
-- Since robust error handling was a requirement for this app, I opted for tanstack-query (managing the lifecycle of data fetching, easy retries, advanced configuration, handling loading states, success, and errors)
-- For client state - React-Context
+- **Framework:** Next.js
 
-## Setupes.
+- **UI:** Flowbite-React, TailwindCSS
+
+- **Charts:** ECharts-React
+
+- **Data Fetching:** TanStack Query (for robust error handling, retries, loading, success, and error states)
+
+- **Client State Management:** React Context
+
+## Setup
 
 ```bash
 npm run setup
@@ -25,166 +30,47 @@ npm run install-and-dev
 
 ### Authentication Architecture
 
-My primary focus was when developing the auth flow was making sure that I don't expose any sensitive data, either on Github (api key) or simply during runtime on the client (api key, user Tokens).
-I followed the industry-standard solution and opted to use proxy servers for all API interactions. These can be found under the pages/api/\*\*.ts directory, ensuring that the tokens and API key are securely hidden from the client-side.
+When developing the authentication flow, my priority was to **prevent exposure of sensitive data** — both publicly (e.g., GitHub commits) and during client runtime (e.g., API keys, user tokens).
 
-To persist the user's session, two cookies are used: accessToken and refreshToken. These cookies enable the user to stay logged in while navigating the app. If a user attempts to visit the dashboard and no valid token exists or the token has expired, the cookies are cleared, and the user is redirected back to the login page.
+To achieve this, I implemented **proxy API routes** located under the `/pages/api/**/*.ts` directory.
+This ensures that all API interactions are routed through a secure server-side layer, keeping sensitive credentials hidden from the client.
 
-This approach helps maintain both security and a seamless user experience by abstracting sensitive data away from the client while also providing an effective way to manage the user session across requests.
+For session persistence, I used two cookies: `accessToken` and `refreshToken`.
+These cookies allow users to stay authenticated while navigating the app. If the tokens are missing or invalid, they are cleared automatically, and the user is redirected back to the login page.
 
-For managing client-side state, I chose React Context, which proved to be a handy tool, especially when navigating between the auth forms.
+Key design choices:
 
----
+- Sensitive keys and tokens never exposed on the client.
+- Smooth, secure session management.
+- React Context used for handling authentication state between forms and components.
 
-## Objective
+## Part 2 — Dashboard
 
-The goal of this test is to evaluate your ability to integrate pre-built components, work with backend APIs, and design a functional dashboard from scratch.
+### Dashboard Architecture
 
----
+The dashboard is structured with **modular, reusable components** using Flowbite-React and TailwindCSS, with **no custom CSS** to maintain consistency and scalability.
 
-## Scope
+For the **Summary Section**:
 
-### Authentication Flow:
+- Implemented a clean responsive layout displaying key financial metrics (e.g., Outstanding Invoices, Gross Profit Margin, Revenue, Expenses, Profit Breakdown).
+- Data fetching is fully integrated using **TanStack Query**, handling loading, error, and success states.
+- Data visualization is powered by **ECharts-React** for revenue, expenses, and stock value trends.
 
-1. Integrate the provided **Login** and **OTP Verification** components with the backend API.
-2. Implement API calls for login and OTP verification.
+**Currently in Progress:**
 
-### Dashboard:
+- Implementing **empty states** for when data is unavailable (e.g., API errors or no financial data).
+- Designing consistent fallback UI to preserve layout and UX in all cases.
 
-1. Build a dashboard interface following the provided [Figma design](https://www.figma.com/design/kBB5XdNU6L1zJpnAkmHXn6/test1?node-id=68-899&t=23poGHzKgD5OrHSc-1).
-2. Use **Flowbite React** components to create the dashboard UI and the library of your choice for charts.
+### Notes:
 
----
+- All data interactions go through **client-safe API routes**, following the same security principles as in the authentication flow.
 
-## Key Requirements
+## Final Notes
 
-### API Integration:
+While the project is still a work in progress, the core structure is fully in place:
 
-Use the provided `api_key` in the request headers:
+- Authentication is complete and security best practices are implemented.
+- The dashboard's Summary Section is functional, styled, and data-driven.
+- Empty state handling is actively being developed to ensure a robust user experience.
 
-```bash
-api_key: <api_key>
-```
-
-### Dashboard Features:
-
-1. **Summary Metrics**:
-   - Integrate and display metrics such as revenue, expenses, outstanding invoices, etc.
-2. **Invoices Table**:
-   - Fetch and display data in a table format with pagination and filtering.
-3. **Profit/Expenses Chart**:
-   - Render a chart based on financial data from the API.
-
-### UI Design:
-
-- Adhere to the Figma design as closely as possible.
-- Use **Flowbite React** for buttons, tables, modals, and the library of your choice for charts.
-
----
-
-## Provided Resources
-
-1. **Login and OTP Components**:
-
-   - Pre-built components for the **Login** and **OTP Verification** flows are provided.
-   - Your task is to integrate them with the backend APIs.
-
-2. **Backend API**:
-
-   - Endpoints for authentication and dashboard data:
-     - **Login**: `POST /api/v1/user/login`
-     - **Verify OTP**: `POST /api/v1/user/verify-otp`
-     - **Dashboard Data**: `GET /api/v1/dashboard/accountant`
-
-3. **Design**:
-   - Figma file for reference: [Figma Design](https://www.figma.com/design/kBB5XdNU6L1zJpnAkmHXn6/test1?node-id=68-899&t=23poGHzKgD5OrHSc-1).
-
----
-
-## How to Use the Sign-Up API
-
-While sign-up is not part of the task, you can create test users using the backend API. Use the following payload with the endpoint `POST /api/v1/user/signup`:
-
-```json
-{
-  "first_name": "John",
-  "last_name": "Doe",
-  "email": "johndoe@gmail.com",
-  "country": "AE",
-  "lang": "{\"acceptedLang\":\"en\",\"browserLang\":\"en-US\"}",
-  "phone_country_code": "971",
-  "phone_number": "0000000000",
-  "dob": "1993-03-03T20:00:00.000",
-  "password": "GrosTest2020!_!_",
-  "user_type": "root"
-}
-```
-
-Ensure that the provided email and phone number are unique.
-
----
-
-## Tasks
-
-### 1. Authentication Flow Integration
-
-- **Login**:
-  - Use the provided login component.
-  - Integrate it with the `POST /api/v1/user/login` endpoint.
-- **OTP Verification**:
-  - Use the provided OTP verification component.
-  - Integrate it with the `POST /api/v1/user/verify-otp` endpoint.
-
-### 2. Dashboard Implementation
-
-- **Summary Metrics**:
-  - Display metrics such as outstanding invoices, revenue, expenses, etc.
-  - Fetch data from `GET /api/v1/dashboard/accountant`.
-- **Invoices Table**:
-  - Build a table to list invoices with pagination and filtering.
-  - Use Flowbite's Table component.
-- **Chart**:
-  - Render a basic profit/expenses chart.
-  - Use Flowbite or a compatible charting library.
-
----
-
-## Submission
-
-### Deliverables:
-
-1. A GitHub repository containing the project code.
-2. Instructions in the `README` to:
-   - Set up and run the project.
-   - Test the login, OTP verification, and dashboard functionality.
-
-### Deadline:
-
-You have **3 days** to complete the test.
-
----
-
-## Evaluation Criteria
-
-1. **Backend Integration**:
-   - API calls are implemented correctly, and data is rendered as expected.
-2. **UI/UX**:
-   - Dashboard matches the Figma design closely.
-   - Clean and user-friendly interface.
-3. **Code Quality**:
-   - Use of reusable components.
-   - Clean and maintainable code structure.
-4. **Proper Use of Flowbite**:
-   - Appropriate use of Flowbite React components for tables, charts, and other UI elements.
-
----
-
-### Note
-
-Sign-up is not required in this test. Use the **Sign-Up API** as described above to create test accounts.
-
-Good luck, and we look forward to reviewing your submission!
-
-```
-
-```
+Since additional API endpoints would be required to fully populate the remaining dashboard sections, I made the decision to prioritize building the empty states first. This approach maintains layout integrity and provides a complete user experience, while leaving flexibility to fetch and display dynamic data if time allows.
